@@ -9,13 +9,30 @@ import PageTittle from '../../../PageTittle/PageTittle';
 import Loading from '../../Loading/Loading';
 
 const Login = () => {
-    const [signInWithGoogle,user,loading, error,] = useSignInWithGoogle(auth);
+    const [signInWithGoogle,user,loading] = useSignInWithGoogle(auth);
 
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
     const navigate = useNavigate();
 
-    // const [token] = useToken(user || user1);
+    const handleSubmit = async()=>{
+        await signInWithGoogle()
+
+        const email = user?.user?.email;
+        fetch('http://localhost:5000/login',{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({email})
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            localStorage.setItem('accessToken', data?.accessToken);
+        })
+        
+    }
+
     if(user){
         navigate(from,{replace: true});
     }
@@ -31,7 +48,7 @@ const Login = () => {
                 <Form.Group className="mb-3" controlId="formGroupEmail">
                     <Form.Label><h3 className='text-dark mx-5 px-5'>Login with</h3></Form.Label>
                 </Form.Group>
-                <Button onClick={()=>signInWithGoogle()} style={{ width: '23rem' }} variant="outline-secondary"> <FontAwesomeIcon className='text-danger' icon={faG}/> Google</Button>
+                <Button onClick={handleSubmit} style={{ width: '23rem' }} variant="outline-secondary"> <FontAwesomeIcon className='text-danger' icon={faG}/> Google</Button>
                 <p className='mx-4 my-2'>Don't have account? <Link>Create account!</Link></p>
             </Form>
             </Container>

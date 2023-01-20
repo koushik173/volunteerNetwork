@@ -7,6 +7,7 @@ const WorkRegister = () => {
     const [user] = useAuthState(auth);
     const {workId} = useParams()
     const [work,setWork] = useState([]);
+    const [date, setDate] = useState(new Date());
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -19,12 +20,13 @@ const WorkRegister = () => {
     const handleRegister = event=>{
         event.preventDefault();
         const volunteer ={
+            name:user.displayName,
             email: user.email,
             work: work.name,
             workId: workId,
             photo: work.photo,
             phone: event.target.phone.value,
-            date: event.target.date.value,
+            date: event.target.datePic.value,
             description: event.target.description.value
         }
         // console.log(volunteer);
@@ -54,11 +56,11 @@ const WorkRegister = () => {
                 <input className='w-100 mb-3' type="email" value={user?.email} name='email' placeholder='Username or Email' disabled readOnly required/> <br />
                 <input className='w-100 mb-3' type="text" value={work.name} name='work' disabled readOnly/> <br />
 
-                <input className='w-100 mb-3' type="text" name='phone' placeholder='Phone' autoComplete='off' required/> <br />
+                <input className='w-100 mb-3' type="text" name='phone' placeholder='Phone' required/> <br />
 
-                <input className='w-100 mb-3' type="text" name='date' placeholder='date' autoComplete='off' required/> <br />
+                <input className='w-100 mb-3' type="date" name='datePic' placeholder='DateRange' value={date} onChange={(e) => setDate(e.target.value)} required/> <br />
 
-                <input className='w-100 mb-3' type="text" name='description' placeholder='description' required/> <br />
+                <textarea className='w-100 mb-3' type="text" name='description' placeholder='description' required/> <br />
                 
                 <input className=' w-50 btn btn-primary' type="submit" value='Place Order'/> <br />
             </form>

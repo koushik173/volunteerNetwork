@@ -1,14 +1,33 @@
+import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
 import PageTittle from '../../PageTittle/PageTittle';
 import Event from './Event';
 
 const Events = () => {
     const [events,setEvent] = useState([]);
+    const [user] = useAuthState(auth);
+    const navigate = useNavigate();
+
     useEffect(()=>{
-        const url = `http://localhost:5000/volunteers`
-        fetch(url)
-        .then(res=>res.json())
+        const email = user?.email;
+        const url = `http://localhost:5000/volunteers?email=${email}`
+        fetch(url,{
+            method: 'GET',
+            headers:{
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(res=>{
+            if(res.status === 401 || res.status===403){
+                signOut(auth);
+                navigate('/login')
+            }
+            return res.json();
+        })
         .then(data=>setEvent(data));
     },[])
 

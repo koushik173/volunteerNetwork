@@ -8,6 +8,7 @@ import PageTittle from '../../PageTittle/PageTittle';
 const User = () => {
     const navigate = useNavigate();
     const logOut=()=>{
+        localStorage.removeItem('accessToken');
         signOut(auth);
         navigate('/login')
     }

@@ -23,9 +23,11 @@ const Header = () => {
                         <Nav.Link className={textColor==2?'text-primary':''} onClick={()=>setTextColor(2)} as={Link} to={'/donation'}>Donation</Nav.Link>
                         <Nav.Link className={textColor==3?'text-primary':''} onClick={()=>setTextColor(3)} as={Link} to={'/events'}>Events</Nav.Link>
                         <Nav.Link className={textColor==4?'text-primary':''} onClick={()=>setTextColor(4)} as={Link} to={'/blog'}>Blog</Nav.Link>
+                        <Nav.Link className={textColor==66?'text-danger':''} onClick={()=>setTextColor(66)} as={Link} to={'/admin/volunteerRegList'}>Admin</Nav.Link>
                         {
                             user? <Nav.Link className={textColor==5?'text-primary':''} onClick={()=>setTextColor(5)} as={Link} to={'/user'}>{user.displayName}</Nav.Link> : <Nav.Link className={textColor==6?'text-primary':''} onClick={()=>setTextColor(6)} as={Link} to={'/login'}>Login</Nav.Link>
                         }
+                        
                     </Nav>
                     </Navbar.Collapse>
                 </Container>

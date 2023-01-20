@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 
 const Event = (props) => {
-    const {_id,work,photo,date}=props.event;
+    const {_id,work,photo,date,description}=props.event;
     
     return (
         <>
@@ -10,10 +10,11 @@ const Event = (props) => {
                 <div className='p-3'>
                     <img style={{ width: '12rem' }} variant="top" src={photo} />
                 </div>
-                <div className='p-3'>
-                    <h3>{work}</h3>
-                    <p>sept 23,2022</p>
-                    <Button onClick={()=>props.handleDelete(_id)} className='my-5 px-5'>Delete</Button>
+                <div className='p-2'>
+                    <h4>{work}</h4>
+                    <p>{date}</p>
+                    <p>{description}</p>
+                    <Button onClick={()=>props.handleDelete(_id)} className='my-5'>Delete</Button>
                 </div>
             </div>
             
